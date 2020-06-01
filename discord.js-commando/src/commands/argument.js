@@ -183,7 +183,12 @@ class Argument {
 			prompts.push(await msg.reply(stripIndents`
 				${empty ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}
 			`));
-			return;
+			return {
+				value: await this.parse(val, msg),
+				cancelled: true,
+				prompts,
+				answers
+			};
 			
 			// prompts.push(await msg.reply(stripIndents`
 			// 	${empty ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}
